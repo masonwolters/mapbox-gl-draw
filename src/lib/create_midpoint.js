@@ -18,11 +18,12 @@ export default function(parent, startVertex, endVertex) {
     lat: (startCoord[1] + endCoord[1]) / 2
   };
 
-  return {
+  const midpoint =  {
     type: Constants.geojsonTypes.FEATURE,
     properties: {
+      ...parent.properties,
       meta: Constants.meta.MIDPOINT,
-      parent,
+      parent: parent.properties && parent.properties.id,
       lng: mid.lng,
       lat: mid.lat,
       coord_path: endVertex.properties.coord_path
@@ -32,4 +33,6 @@ export default function(parent, startVertex, endVertex) {
       coordinates: [mid.lng, mid.lat]
     }
   };
+  delete midpoint.properties.id;
+  return midpoint;
 }
