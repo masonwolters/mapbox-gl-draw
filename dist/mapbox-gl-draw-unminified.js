@@ -6892,7 +6892,13 @@ function setupAPI(ctx, api) {
       } else {
         // If a feature of that id has already been created, and we are swapping it out ...
         var internalFeature$1 = ctx.store.get(feature.id);
+
+        if (!isEqual(internalFeature$1.properties, feature.properties)) {
+          ctx.store.featureChanged(feature.id);
+        }
+
         internalFeature$1.properties = feature.properties;
+
         if (!isEqual(internalFeature$1.getCoordinates(), feature.geometry.coordinates)) {
           internalFeature$1.incomingCoords(feature.geometry.coordinates);
         }
